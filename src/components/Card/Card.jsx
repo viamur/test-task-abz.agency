@@ -1,9 +1,10 @@
+import Tooltip from '../Tooltip/Tooltip';
 import s from './Card.module.scss';
 
 const data = {
   id: '30',
   name: 'Angel',
-  email: 'angel.williams@exampleррррррррррррр.com',
+  email: 'angel.williams@exampleррррjjjjjррррррррр.com',
   phone: '+380496540023',
   position: 'Designer',
   position_id: '4',
@@ -12,8 +13,9 @@ const data = {
 };
 const Card = ({}) => {
   // функция будет длинный текст резать и ставить точки
+  const maxLength = 29;
+
   const resizeText = text => {
-    const maxLength = 29;
     if (text.length > maxLength) {
       const sliceText = `${text.slice(0, maxLength)}...`;
       return sliceText;
@@ -24,9 +26,27 @@ const Card = ({}) => {
   return (
     <li className={s.item}>
       <img src={data.photo} className={s.img} alt={data.name} />
-      <h4 className={s.name}>{resizeText(data.name)}</h4>
-      <h5 className={s.position}>{resizeText(data.position)}</h5>
-      <p className={s.email}> {resizeText(data.email)}</p>
+      {data.name.length > maxLength ? (
+        <Tooltip text={data.name}>
+          <h4 className={s.name}>{resizeText(data.name)}</h4>
+        </Tooltip>
+      ) : (
+        <h4 className={s.name}>{data.name}</h4>
+      )}
+      {data.position.length > maxLength ? (
+        <Tooltip text={data.position}>
+          <h5 className={s.position}>{resizeText(data.position)}</h5>
+        </Tooltip>
+      ) : (
+        <h5 className={s.position}>{data.position}</h5>
+      )}
+      {data.email.length > maxLength ? (
+        <Tooltip text={data.email}>
+          <p className={s.email}> {resizeText(data.email)}</p>
+        </Tooltip>
+      ) : (
+        <p className={s.email}>{data.email}</p>
+      )}
       <p className={s.phone}>{data.phone}</p>
     </li>
   );
