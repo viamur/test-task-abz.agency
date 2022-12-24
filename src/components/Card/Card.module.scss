@@ -1,0 +1,25 @@
+.item {
+  width: 100%;
+  padding: 20px;
+
+  border-radius: 10px;
+  background-color: var(--white);
+}
+
+.img {
+  width: 70px;
+  height: 70px;
+
+  background-image: url('../../images/icon/svg/photo-cover.svg');
+
+  margin: 0 auto;
+}
+.name {
+  margin-top: 20px;
+  font-weight: 400;
+}
+.position {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 400;
+}
