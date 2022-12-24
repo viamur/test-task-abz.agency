@@ -10,7 +10,7 @@ const Header = () => {
     <header id="header" className={s.header}>
       <Container>
         <div className={s.wrap}>
-          <svg className={s.iconFavorite} aria-label="Add to favorite" height={26} width={104}>
+          <svg aria-label="logo" height={26} width={104}>
             <use href={sprite + '#icon-Logo'} />
           </svg>
           <nav>
