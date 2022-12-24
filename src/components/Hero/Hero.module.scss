@@ -1,0 +1,62 @@
+@import '../../sass/mixin';
+.section {
+  padding-top: 40px;
+  padding-bottom: 71px;
+
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('../../images/hero/mob.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  @include mq(mob) {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('../../images/hero/tab.jpg');
+  }
+
+  @include mq(tab) {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('../../images/hero/desk1.jpg');
+
+    padding-top: 89px;
+    padding-bottom: 89px;
+  }
+
+  @include mq(desk) {
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('../../images/hero/desk2.jpg');
+
+    padding-top: 164px;
+    padding-bottom: 164px;
+  }
+
+  @media screen and (min-width: 1170px) {
+    background-size: 1170px;
+  }
+}
+.wrap {
+  max-width: 380px;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  text-align: center;
+
+  color: var(--white);
+
+  margin-bottom: 21px;
+}
+
+.desc {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.62;
+  text-align: center;
+
+  color: var(--white);
+
+  margin-bottom: 32px;
+}

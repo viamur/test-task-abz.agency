@@ -1,15 +1,13 @@
 import './App.scss';
-import Card from './Card/Card';
 import Header from './Header/Header';
-import Preloader from './Preloader/Preloader';
-import RadioButton from './RadioButton/RadioButton';
+import Hero from './Hero/Hero';
 
 function App() {
+
   return (
     <div className="App">
       <Header />
-      <Card />
-      <Preloader />
+      <Hero />
     </div>
   );
 }
