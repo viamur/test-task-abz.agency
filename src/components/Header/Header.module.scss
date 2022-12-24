@@ -1,0 +1,16 @@
+.header {
+  background-color: var(--white);
+  padding-top: 13px;
+  padding-bottom: 13px;
+}
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.list {
+  display: flex;
+}
+.item:first-child {
+  margin-right: 10px;
+}

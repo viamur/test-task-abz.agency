@@ -10,6 +10,7 @@
 
   border-radius: 80px;
   transition: all var(--transition);
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -19,5 +20,11 @@
   &:disabled {
     background-color: #b4b4b4;
     color: rgba(255, 255, 255, 0.87);
+    cursor: auto;
   }
+}
+.btnDisabled {
+  background-color: #b4b4b4;
+  color: rgba(255, 255, 255, 0.87);
+  cursor: auto;
 }
