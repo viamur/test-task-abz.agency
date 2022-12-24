@@ -1,0 +1,23 @@
+.btn {
+  width: 100px;
+  height: 34px;
+
+  border: none;
+  outline: none;
+
+  background-color: var(--accent-color);
+  color: var(--text-color);
+
+  border-radius: 80px;
+  transition: all var(--transition);
+
+  &:hover,
+  &:focus {
+    background-color: var(--btnHover-color);
+  }
+
+  &:disabled {
+    background-color: #b4b4b4;
+    color: rgba(255, 255, 255, 0.87);
+  }
+}
