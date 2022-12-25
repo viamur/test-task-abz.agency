@@ -16,6 +16,7 @@
   }
 }
 .form {
+  position: relative;
   @include mq(tab) {
     width: 380px;
     margin: 0 auto;
@@ -40,4 +41,16 @@
 }
 .successSvg {
   margin: 0 auto;
+}
+.errorSend {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+
+  width: 100%;
+
+  transform: translateX(-50%);
+
+  font-size: 12px;
+  color: var(--error-color);
 }

@@ -117,7 +117,7 @@ const Form = ({ positions, addNewUser }) => {
   // сабмит формы
   const handleSubmit = async () => {
     // e.preventDefault();
-
+    setError(prev => ({ ...prev, send: null }));
     setLoading(true);
 
     try {
@@ -137,11 +137,11 @@ const Form = ({ positions, addNewUser }) => {
         setSuccess(true);
         resetForm();
       }
-
       setLoading(false);
     } catch (error) {
       console.log('handleSubmit', error);
       setLoading(false);
+      setError(prev => ({ ...prev, send: error.response.data.message }));
     }
   };
 
@@ -220,6 +220,7 @@ const Form = ({ positions, addNewUser }) => {
               setError={setError}
               marginBottom={50}
             />
+            {error.send && <span className={s.errorSend}>{error.send}</span>}
             {loading ? (
               <Preloader />
             ) : (

@@ -1,4 +1,5 @@
 import Tooltip from '../Tooltip/Tooltip';
+
 import s from './Card.module.scss';
 
 const Card = ({ data }) => {

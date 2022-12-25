@@ -27,11 +27,6 @@
   justify-content: center;
 
   transition: all var(--transition);
-
-  &:hover,
-  &:focus {
-    // background-color: var(--accent-color);
-  }
 }
 
 .span {

@@ -37,16 +37,13 @@ export const getToken = async () => {
 
 /* =============POST USER============== */
 export const postUser = async (data) => {
-    try {
-        const response = await axios.post(`users`, data, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.log(error);
-    }
+
+    const response = await axios.post(`users`, data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+    return response.data;
 }
 
 /* =============GET USER ID============== */
