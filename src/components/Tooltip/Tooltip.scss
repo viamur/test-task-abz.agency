@@ -1,3 +1,5 @@
+@import '../../sass/mixin';
+
 .wrap {
   position: relative;
   cursor: pointer;
@@ -6,7 +8,7 @@
   position: absolute;
   z-index: 5;
   top: 125%;
-  left: 15px;
+  left: 0;
 
   display: block;
 
@@ -20,6 +22,13 @@
   opacity: 0;
 
   transition: all var(--transition);
+  @include mq(no-desk) {
+    overflow: auto;
+    max-width: calc(100% + 40px);
+  }
+  @include mq(desk) {
+    overflow: visible;
+  }
 }
 .wrap:hover .tooltip {
   visibility: visible;

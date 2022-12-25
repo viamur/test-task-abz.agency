@@ -1,17 +1,7 @@
 import Tooltip from '../Tooltip/Tooltip';
 import s from './Card.module.scss';
 
-const data = {
-  id: '30',
-  name: 'Angel',
-  email: 'angel.williams@exampleррррjjjjjррррррррр.com',
-  phone: '+380496540023',
-  position: 'Designer',
-  position_id: '4',
-  registration_timestamp: 1537777441,
-  photo: 'https://frontend-test-assignment-api.abz.agency/images/users/5b977ba13fb3330.jpeg',
-};
-const Card = ({}) => {
+const Card = ({ data }) => {
   // функция будет длинный текст резать и ставить точки
   const maxLength = 29;
 

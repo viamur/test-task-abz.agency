@@ -1,11 +1,21 @@
-import { useState } from 'react';
 import s from './Input.module.scss';
 
-const Input = ({ name, type, label, error, value, handleChange, onBlur, minLength, maxLength }) => {
+const Input = ({
+  name,
+  type,
+  label,
+  error,
+  value,
+  handleChange,
+  onBlur,
+  minLength,
+  maxLength,
+  marginBottom,
+}) => {
   const classLabel = value ? `${s.label} ${s.labelTop}` : s.label;
   const classInput = error ? `${s.input} ${s.inputError}` : s.input;
   return (
-    <label className={s.wrap}>
+    <label className={s.wrap} style={{ marginBottom }}>
       <span className={classLabel} style={error && { color: '#CB3D40' }}>
         {label}
       </span>
@@ -20,7 +30,7 @@ const Input = ({ name, type, label, error, value, handleChange, onBlur, minLengt
         minLength={minLength}
         className={classInput}
       />
-      {error && <p className={s.error}>error</p>}
+      {error && <p className={s.error}>{error}</p>}
     </label>
   );
 };

@@ -1,0 +1,40 @@
+@import '../../sass/mixin';
+
+.section {
+  margin-bottom: 100px;
+}
+.title {
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+
+  margin-bottom: 50px;
+
+  &__radioBtn {
+    text-align: start;
+    margin-bottom: 11px;
+  }
+}
+.form {
+  @include mq(tab) {
+    width: 380px;
+    margin: 0 auto;
+  }
+}
+.phoneInput {
+  position: relative;
+  margin-bottom: 43px !important;
+}
+.phoneInput__text {
+  position: absolute;
+  bottom: -16px;
+  left: 15px;
+
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.17;
+  color: var(--input-placeholder-color);
+}
+.radioBtns {
+  margin-bottom: 47px;
+}

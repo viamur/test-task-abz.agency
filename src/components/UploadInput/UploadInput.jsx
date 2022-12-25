@@ -1,14 +1,11 @@
-import { useState } from 'react';
-
 import s from './UploadInput.module.scss';
 
-const UploadInput = () => {
-  const [file, setFile] = useState(null);
-  const [error, setError] = useState(null);
+const UploadInput = ({ file, setFile, error, setError, marginBottom }) => {
+  // const [error, setError] = useState(null);
 
   const handleUploadFile = e => {
     // очищаем ошибки
-    setError(null);
+    setError(prev => ({ ...prev, file: null }));
     setFile(null);
 
     //   для удобности файл в переменую записуем
@@ -16,7 +13,7 @@ const UploadInput = () => {
 
     // если файл больше 5мб ошибку выводим
     if (fileTmp.size > 5242880) {
-      setError('The photo size must not be greater than 5 Mb');
+      setError(prev => ({ ...prev, file: 'The photo size must not be greater than 5 Mb' }));
       return;
     }
 
@@ -25,7 +22,7 @@ const UploadInput = () => {
     img.src = window.URL.createObjectURL(e.target.files[0]);
     img.onload = () => {
       if (img.width < 70 || img.height < 70) {
-        setError('Minimum size of photo 70x70px');
+        setError(prev => ({ ...prev, file: 'Minimum size of photo 70x70px' }));
         return;
 
         // upload logic here
@@ -36,7 +33,7 @@ const UploadInput = () => {
   };
 
   return (
-    <div className={s.wrap}>
+    <fieldset className={s.wrap} style={{ marginBottom }}>
       <input
         type="file"
         onChange={handleUploadFile}
@@ -66,7 +63,7 @@ const UploadInput = () => {
         {file ? file.name : 'Upload your photo'}
       </span>
       {error && <p className={s.error}>{error}</p>}
-    </div>
+    </fieldset>
   );
 };
 

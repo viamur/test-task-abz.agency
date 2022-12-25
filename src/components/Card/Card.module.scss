@@ -1,9 +1,18 @@
+@import '../../sass/mixin';
+
 .item {
   width: 100%;
   padding: 20px;
 
   border-radius: 10px;
   background-color: var(--white);
+
+  @include mq(tab) {
+    width: calc((100% - 16px) / 2);
+  }
+  @include mq(desk) {
+    width: calc((100% - 58px) / 3);
+  }
 }
 
 .img {
@@ -13,6 +22,8 @@
   background-image: url('../../images/icon/svg/photo-cover.svg');
 
   margin: 0 auto;
+
+  border-radius: 50%;
 }
 .name {
   margin-top: 20px;
