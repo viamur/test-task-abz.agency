@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { getToken, getUserID, postUser } from '../../utils/api';
 import Button from '../Button/Button';
 import Container from '../Container/Container';
 import Input from '../Input/Input';
+import Preloader from '../Preloader/Preloader';
 import RadioButton from '../RadioButton/RadioButton';
 import UploadInput from '../UploadInput/UploadInput';
+
+import successSvg from '../../images/icon/svg/success-image.svg';
 import s from './Form.module.scss';
 
 const initialError = {
@@ -11,19 +15,23 @@ const initialError = {
   email: null,
   phone: null,
   file: null,
+  send: null,
 };
 
 const email_pattern =
   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 const phone_pattern = /^\+?3?8?(0\d{9})$/;
 
-const Form = ({ positions }) => {
+const Form = ({ positions, addNewUser }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [checked, setChecked] = useState(1);
   const [file, setFile] = useState(null);
+
   const [error, setError] = useState(initialError);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   // для кнопки определяем disabled или нет(если есть хоть одна ошибка или одно пустое поле то кнопка будет не активна)
   const disabled =
@@ -96,78 +104,129 @@ const Form = ({ positions }) => {
     }
   };
 
+  // reset form
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPhone('');
+    setChecked(1);
+    setFile(null);
+    setLoading(false);
+  };
+
   // сабмит формы
-  const handleSubmit = e => {
-    e.preventDefault();
-    console.log(disabled);
+  const handleSubmit = async () => {
+    // e.preventDefault();
+
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('email', email);
+      formData.append('position_id', checked);
+      formData.append('phone', phone);
+      formData.append('photo', file);
+
+      await getToken();
+      const response = await postUser(formData);
+
+      if (response.success) {
+        const dataNewUser = await getUserID(response['user_id']);
+        addNewUser(dataNewUser.user);
+        setSuccess(true);
+        resetForm();
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log('handleSubmit', error);
+      setLoading(false);
+    }
   };
 
   return (
     <section id="form" className={s.section}>
       <Container>
-        <h2 className={s.title}>Working with POST request</h2>
-        <form className={s.form}>
-          <Input
-            name={'name'}
-            type={'text'}
-            label={'Your name'}
-            error={error.name}
-            value={name}
-            handleChange={handleChange}
-            onBlur={onBlur}
-            minLength={2}
-            maxLength={60}
-            marginBottom={50}
+        <h2 className={s.title}>
+          {success ? 'User successfully registered' : 'Working with POST request'}
+        </h2>
+        {success ? (
+          <img
+            className={s.successSvg}
+            width={328}
+            height={290}
+            src={successSvg}
+            alt="User successfully registered"
           />
-          <Input
-            name={'email'}
-            type={'email'}
-            label={'Email'}
-            error={error.email}
-            value={email}
-            handleChange={handleChange}
-            onBlur={onBlur}
-            minLength={2}
-            maxLength={60}
-            marginBottom={50}
-          />
-          <fieldset className={s.phoneInput}>
+        ) : (
+          <form className={s.form}>
             <Input
-              name={'phone'}
-              type={'number'}
-              label={'Phone'}
-              error={error.phone}
-              value={phone}
+              name={'name'}
+              type={'text'}
+              label={'Your name'}
+              error={error.name}
+              value={name}
               handleChange={handleChange}
               onBlur={onBlur}
-              minLength={12}
-              maxLength={13}
-              marginBottom={4}
+              minLength={2}
+              maxLength={60}
+              marginBottom={50}
             />
-            {!error.phone && <span className={s.phoneInput__text}>+38 (XXX) XXX - XX - XX</span>}
-          </fieldset>
-          <p className={s.title__radioBtn}>Select your position</p>
-          <fieldset className={s.radioBtns}>
-            {positions.map(el => {
-              return (
-                <RadioButton
-                  data={el}
-                  key={el.id}
-                  checked={checked}
-                  handleChecked={handleChecked}
-                />
-              );
-            })}
-          </fieldset>
-          <UploadInput
-            file={file}
-            setFile={setFile}
-            error={error.file}
-            setError={setError}
-            marginBottom={50}
-          />
-          <Button title={'Sign up'} disabled={!disabled} handleClick={handleSubmit} />
-        </form>
+            <Input
+              name={'email'}
+              type={'email'}
+              label={'Email'}
+              error={error.email}
+              value={email}
+              handleChange={handleChange}
+              onBlur={onBlur}
+              minLength={2}
+              maxLength={60}
+              marginBottom={50}
+            />
+            <fieldset className={s.phoneInput}>
+              <Input
+                name={'phone'}
+                type={'tel'}
+                label={'Phone'}
+                error={error.phone}
+                value={phone}
+                handleChange={handleChange}
+                onBlur={onBlur}
+                minLength={12}
+                maxLength={13}
+                marginBottom={4}
+              />
+              {!error.phone && <span className={s.phoneInput__text}>+38 (XXX) XXX - XX - XX</span>}
+            </fieldset>
+            <p className={s.title__radioBtn}>Select your position</p>
+            <fieldset className={s.radioBtns}>
+              {positions.map(el => {
+                return (
+                  <RadioButton
+                    data={el}
+                    key={el.id}
+                    checked={checked}
+                    handleChecked={handleChecked}
+                  />
+                );
+              })}
+            </fieldset>
+            <UploadInput
+              file={file}
+              setFile={setFile}
+              error={error.file}
+              setError={setError}
+              marginBottom={50}
+            />
+            {loading ? (
+              <Preloader />
+            ) : (
+              <Button title={'Sign up'} disabled={!disabled} handleClick={handleSubmit} />
+            )}
+          </form>
+        )}
       </Container>
     </section>
   );

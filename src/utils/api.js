@@ -23,3 +23,34 @@ export const getPositions = async () => {
         console.log(error);
     }
 }
+
+/* =============GET TOKEN============== */
+export const getToken = async () => {
+    try {
+        const response = await axios.get(`token`)
+        axios.defaults.headers.common.Token = response.data.token;
+        return response.data.token;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+/* =============POST USER============== */
+export const postUser = async (data) => {
+    try {
+        const response = await axios.post(`users`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+/* =============GET USER ID============== */
+export const getUserID = async (id) => {
+    const response = await axios.get(`users/${id}`);
+    return response.data;
+}

@@ -53,7 +53,6 @@ const UploadInput = ({ file, setFile, error, setError, marginBottom }) => {
       </label>
       <span
         className={s.span}
-        onClick={() => console.log(file)}
         style={
           file
             ? { color: 'rgba(0, 0, 0, 0.87)' }

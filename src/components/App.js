@@ -8,41 +8,62 @@ import List from './List/List';
 import Preloader from './Preloader/Preloader';
 
 function App() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [users, setUsers] = useState([]);
   const [positions, setPositions] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // будем хранить данные сколько общее количество страниц
   const totalPage = useRef();
+  const effectRan = useRef(false);
 
   useEffect(() => {
-    if (page === 0) {
-      const data = async () => {
-        const res = await getPositions();
-        setPositions(res.positions);
-      }
-      data();
+    if (!effectRan.current) {
 
-      // что б два запроса гет не делало
-      setPage(1);
-      return;
+      const dataPositions = async () => {
+        try {
+          const res = await getPositions();
+          setPositions(res.positions);
+        } catch (error) {
+          console.log(error)
+        }
+      };
+
+      // делаем запрос на бек позиции
+      dataPositions();
+
+      // делаем запрос на бек пользователей берем
+      dataUser(page);
+
+      // loading убираем 
+      setLoading(false);
     }
+    return () => { effectRan.current = true };
+    // eslint-disable-next-line
+  }, [])
 
-    const data = async () => {
-      const res = await getUsers({ page });
-
-      setUsers(prev => [...prev, ...res.users]);
+  const dataUser = async (data) => {
+    try {
+      const res = await getUsers({ page: data });
+      setUsers(prev => ([...prev, ...res.users].sort((a, b) => b['registration_timestamp'] - a['registration_timestamp'])));
       totalPage.current = res.total_pages;
-    }
+    } catch (error) {
+      console.log('dataUser', error)
 
-    data();
-    setLoading(false);
-  }, [page])
+    }
+  }
+
+  // при успешной добовление пользователя на сервер добовляем его в массив
+  const addNewUser = (data) => {
+    setUsers(prev => ([data, ...prev.slice(0, 5)]))
+    // обнуляем page
+    setPage(1);
+  }
+
 
   const onShownMore = () => {
+    dataUser(page + 1);
     setPage(prev => prev + 1);
-    console.log(page)
   }
 
   return (
@@ -52,9 +73,9 @@ function App() {
       {loading ?
         <Preloader />
         :
-        <List users={users} lastPage={totalPage === page} onShownMore={onShownMore} />
+        <List users={users} lastPage={totalPage.current === page} onShownMore={onShownMore} />
       }
-      <Form positions={positions} />
+      <Form addNewUser={addNewUser} positions={positions} />
     </div>
   );
 }

@@ -16,10 +16,6 @@
 
   background-color: transparent;
   outline: none;
-
-  //   font-size: 16px;
-  //   line-height: 1.62;
-  //   color: var(--text-color);
 }
 .label {
   position: absolute;
@@ -56,6 +52,6 @@
   color: var(--error-color);
 }
 .inputError {
-  outline: 1px solid var(--error-color);
+  border-width: 2px;
   border-color: var(--error-color);
 }

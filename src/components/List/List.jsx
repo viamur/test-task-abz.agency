@@ -9,11 +9,11 @@ const List = ({ users, onShownMore, lastPage }) => {
       <Container>
         <h2 className={s.title}>Working with GET request</h2>
         <ul className={s.list}>
-          {users.map(el => {
-            return <Card key={el.id} data={el} />;
+          {users.map((el, idx) => {
+            return <Card key={idx} data={el} />;
           })}
         </ul>
-        <Button title={'Show more'} disabled={lastPage} handleClick={onShownMore} />
+        {!lastPage && <Button title={'Show more'} disabled={lastPage} handleClick={onShownMore} />}
       </Container>
     </section>
   );
